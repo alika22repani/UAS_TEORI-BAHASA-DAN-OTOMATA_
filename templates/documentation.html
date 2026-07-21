@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Documentation{% endblock %}
+
+{% block content %}
+
+<section class="section-tight" style="background: var(--ink); color:#EDEEF4;">
+    <div class="container">
+        <div class="mb-2" style="color: var(--amber); font-family: var(--font-mono); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase;">Documentation</div>
+        <h1 style="color:#fff;">Cara kerja &amp; teori di balik aplikasi</h1>
+        <p class="lead mb-0" style="color:#B9BECF; max-width:62ch;">
+            Penjelasan lengkap konsep Pushdown Automata yang diimplementasikan, beserta
+            panduan singkat menggunakan alat validasi.
+        </p>
+    </div>
+</section>
+
+<div class="container section">
+    <div class="row">
+        <!-- ===== Sidebar navigasi in-page ===== -->
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-top" style="top: 6rem;">
+                <div class="footer-heading" style="color: var(--slate);">Di halaman ini</div>
+                <ul class="list-unstyled small">
+                    <li class="mb-2"><a href="#konsep-pda">Konsep Pushdown Automata</a></li>
+                    <li class="mb-2"><a href="#definisi-formal">Definisi Formal (7-tuple)</a></li>
+                    <li class="mb-2"><a href="#algoritma">Algoritma Validasi</a></li>
+                    <li class="mb-2"><a href="#cara-pakai">Cara Menggunakan Aplikasi</a></li>
+                    <li class="mb-2"><a href="#batasan">Batasan Aplikasi</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ===== Konten utama ===== -->
+        <div class="col-lg-9">
+
+            <div id="konsep-pda" class="mb-5">
+                <h3 class="mb-3">Konsep Pushdown Automata</h3>
+                <p class="text-secondary">
+                    Pushdown Automata (PDA) adalah model komputasi yang memperluas Finite Automata
+                    dengan menambahkan sebuah <strong>stack (tumpukan)</strong> sebagai memori tambahan.
+                    Berkat stack ini, PDA mampu mengenali kelas bahasa yang lebih luas, yaitu
+                    <strong>bahasa bebas konteks (context-free language)</strong> &mdash; termasuk
+                    bahasa dengan struktur bersarang seperti tanda kurung, ekspresi aritmatika,
+                    dan tentu saja, struktur tag HTML.
+                </p>
+                <p class="text-secondary">
+                    Intuisinya sederhana: setiap kali PDA membaca simbol "pembuka", simbol tersebut
+                    disimpan (di-push) ke dalam stack. Ketika PDA membaca simbol "penutup", ia akan
+                    mengambil (pop) simbol paling atas dari stack dan memeriksa apakah keduanya
+                    berpasangan. Jika seluruh input habis dibaca dan stack kembali kosong, input
+                    tersebut diterima (accept).
+                </p>
+            </div>
+
+            <div id="definisi-formal" class="mb-5">
+                <h3 class="mb-3">Definisi Formal (7-tuple)</h3>
+                <p class="text-secondary">Secara formal, PDA didefinisikan sebagai:</p>
+                <div class="card-feature mb-3">
+                    <p class="mono mb-0">M = (Q, &Sigma;, &Gamma;, &delta;, q&#8320;, Z&#8320;, F)</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr><th style="width:12%">Simbol</th><th style="width:28%">Nama</th><th>Implementasi pada Aplikasi Ini</th></tr>
+                        </thead>
+                        <tbody class="text-secondary">
+                            <tr><td class="mono">Q</td><td>Himpunan state</td><td>{ q_scan, q_accept, q_reject }</td></tr>
+                            <tr><td class="mono">&Sigma;</td><td>Alfabet input</td><td>Token tag HTML: tag pembuka, tag penutup, tag mandiri (self-closing/void)</td></tr>
+                            <tr><td class="mono">&Gamma;</td><td>Alfabet stack</td><td>Nama tag HTML (div, p, span, dst.) ditambah simbol dasar Z0</td></tr>
+                            <tr><td class="mono">&delta;</td><td>Fungsi transisi</td><td>Aturan PUSH saat tag pembuka, POP &amp; pencocokan saat tag penutup</td></tr>
+                            <tr><td class="mono">q&#8320;</td><td>State awal</td><td>q_scan</td></tr>
+                            <tr><td class="mono">Z&#8320;</td><td>Simbol dasar stack</td><td>"Z0", penanda dasar stack sebelum tag apa pun diproses</td></tr>
+                            <tr><td class="mono">F</td><td>State akhir (final)</td><td>q_accept &mdash; tercapai bila stack kembali hanya berisi Z0 di akhir input</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="algoritma" class="mb-5">
+                <h3 class="mb-3">Algoritma Validasi</h3>
+                <p class="text-secondary">Mesin PDA pada aplikasi ini memproses token satu per satu dengan aturan berikut:</p>
+                <div class="step-item">
+                    <div class="step-index">1</div>
+                    <div><p class="text-secondary mb-0"><strong>Tag pembuka</strong> (mis. <code>&lt;div&gt;</code>) &rarr; nama tag di-<strong>push</strong> ke stack.</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">2</div>
+                    <div><p class="text-secondary mb-0"><strong>Tag penutup</strong> (mis. <code>&lt;/div&gt;</code>) &rarr; <strong>pop</strong> puncak stack, lalu dibandingkan dengan nama tag penutup.</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">3</div>
+                    <div><p class="text-secondary mb-0">Jika nama tidak cocok, atau stack sudah kosong saat hendak pop &rarr; PDA pindah ke <strong>q_reject</strong> dan proses dihentikan.</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">4</div>
+                    <div><p class="text-secondary mb-0"><strong>Tag mandiri</strong> (self-closing/void seperti <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>) tidak memengaruhi stack sama sekali.</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">5</div>
+                    <div><p class="text-secondary mb-0">Setelah token terakhir diproses, jika stack kembali hanya berisi <code>Z0</code> &rarr; PDA berpindah ke <strong>q_accept</strong> (valid). Jika tidak &rarr; <strong>q_reject</strong> (ada tag yang belum ditutup).</p></div>
+                </div>
+            </div>
+
+            <div id="cara-pakai" class="mb-5">
+                <h3 class="mb-3">Cara Menggunakan Aplikasi</h3>
+                <ol class="text-secondary">
+                    <li class="mb-2">Buka halaman <a href="{{ url_for('pda.validator_page') }}">Validator</a>.</li>
+                    <li class="mb-2">Tempelkan kode HTML pada kotak editor, atau klik salah satu contoh yang tersedia.</li>
+                    <li class="mb-2">Klik tombol <strong>"Jalankan Validasi"</strong>.</li>
+                    <li class="mb-2">Lihat status valid/tidak valid, lokasi kesalahan (jika ada), serta tabel jejak langkah PUSH/POP dan state yang dilalui.</li>
+                </ol>
+            </div>
+
+            <div id="batasan" class="mb-3">
+                <h3 class="mb-3">Batasan Aplikasi</h3>
+                <ul class="text-secondary">
+                    <li class="mb-2">Fokus utama adalah <strong>keseimbangan struktur tag</strong>, bukan validasi HTML5 secara penuh (mis. atribut wajib, urutan elemen semantik, dsb).</li>
+                    <li class="mb-2">Isi di dalam tag <code>&lt;script&gt;</code> dan <code>&lt;style&gt;</code> tetap dipindai sebagai teks biasa, sehingga tanda "&lt;" atau "&gt;" di dalam JavaScript/CSS string sebaiknya dihindari pada contoh input.</li>
+                    <li class="mb-2">Panjang input dibatasi hingga 20.000 karakter demi menjaga performa server.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

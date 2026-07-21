@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Kesalahan Server{% endblock %}
+
+{% block content %}
+<section class="section text-center">
+    <div class="container">
+        <div class="mono mb-2" style="color: var(--danger); font-size: .85rem; letter-spacing:.08em; text-transform:uppercase;">Internal Error &middot; 500</div>
+        <h1 class="section-title mb-3">Terjadi kesalahan pada server</h1>
+        <p class="section-lead mx-auto mb-4">
+            Mohon maaf, terjadi kesalahan tak terduga. Silakan coba lagi beberapa saat lagi.
+        </p>
+        <a href="{{ url_for('main.home') }}" class="btn btn-brand-primary px-4">Kembali ke Home</a>
+    </div>
+</section>
+{% endblock %}

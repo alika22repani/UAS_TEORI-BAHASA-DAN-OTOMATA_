@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+<section class="section-tight" style="background: var(--ink); color: #EDEEF4;">
+    <div class="container">
+        <div class="eyebrow mb-2" style="color: var(--amber); font-family: var(--font-mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;">Tentang</div>
+        <h1 class="mb-3" style="color: #fff;">Kenapa memvalidasi HTML dengan PDA?</h1>
+        <p class="lead mb-0" style="color:#B9BECF; max-width: 62ch;">
+            Proyek ini dibuat sebagai Capstone Project untuk mata kuliah Teori Bahasa dan Otomata,
+            dengan tujuan menerjemahkan konsep abstrak Pushdown Automata menjadi sesuatu yang dapat
+            dilihat, dijalankan, dan dipahami secara langsung.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-6">
+                <h3 class="mb-3">Latar Belakang</h3>
+                <p class="text-secondary">
+                    Struktur tag HTML pada dasarnya adalah contoh nyata dari bahasa bebas konteks
+                    (context-free language) &mdash; setiap tag pembuka harus memiliki pasangan tag
+                    penutup, dan urutannya harus bersarang (nested) dengan benar, persis seperti
+                    tanda kurung dalam ekspresi matematika.
+                </p>
+                <p class="text-secondary">
+                    Bahasa semacam ini tidak dapat dikenali secara sempurna oleh Finite Automata
+                    biasa karena membutuhkan "memori" untuk mengingat tag mana yang sedang terbuka.
+                    Di sinilah Pushdown Automata berperan: dengan bantuan stack, PDA dapat mengingat
+                    riwayat tag yang belum ditutup dan mencocokkannya satu per satu.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="mb-3">Tujuan Proyek</h3>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-1-circle"></i></div>
+                    <div>
+                        <h6 class="mb-1">Visualisasi Konsep</h6>
+                        <p class="text-secondary mb-0">Mengubah teori PDA yang abstrak menjadi simulasi interaktif yang bisa dicoba langsung.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-2-circle"></i></div>
+                    <div>
+                        <h6 class="mb-1">Studi Kasus Nyata</h6>
+                        <p class="text-secondary mb-0">Menggunakan validasi tag HTML sebagai studi kasus yang relevan dengan dunia pengembangan web.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-3-circle"></i></div>
+                    <div>
+                        <h6 class="mb-1">Media Belajar</h6>
+                        <p class="text-secondary mb-0">Menjadi alat bantu belajar bagi mahasiswa lain yang mempelajari Teori Bahasa dan Otomata.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-tight" style="background: var(--surface); border-top: 1px solid var(--line);">
+    <div class="container">
+        <h3 class="mb-4">Teknologi yang Digunakan</h3>
+        <div class="row g-4">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">Flask</div>
+                    <div class="text-secondary small">Backend</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">Python</div>
+                    <div class="text-secondary small">Logika PDA</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">Bootstrap 5</div>
+                    <div class="text-secondary small">UI Framework</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">SQLite</div>
+                    <div class="text-secondary small">Database</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">JavaScript</div>
+                    <div class="text-secondary small">Interaktivitas</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card-feature text-center">
+                    <div class="fw-semibold">Railway</div>
+                    <div class="text-secondary small">Deployment</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

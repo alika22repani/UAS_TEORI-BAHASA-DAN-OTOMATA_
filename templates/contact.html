@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<section class="section-tight" style="background: var(--ink); color:#EDEEF4;">
+    <div class="container">
+        <div class="mb-2" style="color: var(--amber); font-family: var(--font-mono); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase;">Contact</div>
+        <h1 style="color:#fff;">Ada pertanyaan atau masukan?</h1>
+        <p class="lead mb-0" style="color:#B9BECF; max-width:60ch;">
+            Kirimkan pesan Anda melalui form di bawah ini. Setiap masukan akan
+            membantu pengembangan aplikasi ini lebih lanjut.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <form method="POST" action="{{ url_for('main.contact') }}" class="card-feature" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama lengkap Anda" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="nama@email.com" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="subject" class="form-label">Subjek</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Topik pesan Anda">
+                        </div>
+                        <div class="col-12">
+                            <label for="message" class="form-label">Pesan</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-brand-primary px-4">
+                                Kirim Pesan <i class="bi bi-send ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4 offset-lg-1 mt-5 mt-lg-0">
+                <div class="footer-heading" style="color: var(--slate);">Informasi Lain</div>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-envelope"></i></div>
+                    <div>
+                        <h6 class="mb-1">Email Akademik</h6>
+                        <p class="text-secondary mb-0">capstone.pda@kampus.ac.id</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-github"></i></div>
+                    <div>
+                        <h6 class="mb-1">Kode Sumber</h6>
+                        <p class="text-secondary mb-0">Tersedia sebagai proyek open-source untuk keperluan pembelajaran.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index"><i class="bi bi-mortarboard"></i></div>
+                    <div>
+                        <h6 class="mb-1">Konteks Akademik</h6>
+                        <p class="text-secondary mb-0">Capstone Project mata kuliah Teori Bahasa dan Otomata.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

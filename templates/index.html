@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+    <div class="container position-relative">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6">
+                <div class="eyebrow mb-3">Capstone Project &middot; Teori Bahasa &amp; Otomata</div>
+                <h1 class="mb-3">Memvalidasi struktur tag HTML dengan Pushdown Automata</h1>
+                <p class="lead mb-4">
+                    Setiap tag pembuka yang perlu ditutup dengan urutan yang tepat adalah persoalan
+                    bahasa bebas konteks klasik. Aplikasi ini menunjukkan bagaimana sebuah PDA
+                    membaca, men-push, dan men-pop tag HTML &mdash; langkah demi langkah, secara nyata.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('pda.validator_page') }}" class="btn btn-brand-primary btn-lg px-4">
+                        <i class="bi bi-play-fill me-1"></i> Coba Validator
+                    </a>
+                    <a href="{{ url_for('main.documentation') }}" class="btn btn-outline-light btn-lg px-4">
+                        Pelajari Konsepnya
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-panel stack-demo">
+                    <div class="stack-demo-header">
+                        <span>Live Simulation</span>
+                        <span>&lt;div&gt;&lt;section&gt;&lt;p&gt;&hellip;</span>
+                    </div>
+                    <div id="stackDemoBody" class="stack-demo-body"></div>
+                    <div id="stackDemoLog" class="stack-log"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FITUR UTAMA ===================== -->
+<section class="section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-7">
+                <div class="section-eyebrow mb-2">Yang Bisa Dilakukan Aplikasi Ini</div>
+                <h2 class="section-title mb-3">Satu mesin, empat lapis penjelasan</h2>
+                <p class="section-lead">
+                    Bukan sekadar mengatakan "valid" atau "tidak valid" &mdash; aplikasi ini
+                    membuka seluruh proses internal PDA agar konsep teori otomata terasa konkret.
+                </p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card-feature">
+                    <div class="feature-icon"><i class="bi bi-check2-square"></i></div>
+                    <h5>Validasi Struktur</h5>
+                    <p class="text-secondary mb-0">Menentukan valid atau tidaknya struktur tag HTML secara instan.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-feature">
+                    <div class="feature-icon"><i class="bi bi-geo-alt"></i></div>
+                    <h5>Letak Kesalahan</h5>
+                    <p class="text-secondary mb-0">Menunjukkan baris dan kolom persis tempat kesalahan tag ditemukan.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-feature">
+                    <div class="feature-icon"><i class="bi bi-layers"></i></div>
+                    <h5>Simulasi Stack</h5>
+                    <p class="text-secondary mb-0">Melihat isi stack berubah pada setiap operasi PUSH dan POP.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-feature">
+                    <div class="feature-icon"><i class="bi bi-diagram-3"></i></div>
+                    <h5>Jejak State</h5>
+                    <p class="text-secondary mb-0">Menelusuri state (q_scan, q_accept, q_reject) yang dilalui mesin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CARA KERJA SINGKAT ===================== -->
+<section class="section-tight" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-5">
+                <div class="section-eyebrow mb-2">Cara Kerja</div>
+                <h2 class="section-title mb-3">Dari kode HTML menjadi keputusan PDA</h2>
+                <p class="section-lead mb-4">Empat tahap sederhana yang terjadi di balik layar setiap kali Anda menekan tombol validasi.</p>
+                <a href="{{ url_for('main.documentation') }}" class="btn btn-brand-outline">Baca penjelasan lengkap</a>
+            </div>
+            <div class="col-lg-7">
+                <div class="step-item">
+                    <div class="step-index">01</div>
+                    <div>
+                        <h6 class="mb-1">Tokenisasi</h6>
+                        <p class="text-secondary mb-0">Kode HTML dipecah menjadi token tag pembuka, penutup, dan tag mandiri.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">02</div>
+                    <div>
+                        <h6 class="mb-1">Inisialisasi Stack</h6>
+                        <p class="text-secondary mb-0">Stack dimulai dengan simbol dasar <code>Z0</code> dan state <code>q_scan</code>.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">03</div>
+                    <div>
+                        <h6 class="mb-1">Transisi PUSH / POP</h6>
+                        <p class="text-secondary mb-0">Tag pembuka di-push, tag penutup memicu pop dan dicocokkan dengan puncak stack.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-index">04</div>
+                    <div>
+                        <h6 class="mb-1">Keputusan Akhir</h6>
+                        <p class="text-secondary mb-0">Diterima jika stack kembali ke <code>Z0</code>, ditolak jika ada tag yang tidak berpasangan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="section-title mb-3">Siap mencoba mesin PDA-nya?</h2>
+        <p class="section-lead mx-auto mb-4">Tempelkan kode HTML Anda sendiri, atau mulai dari salah satu contoh yang sudah disediakan.</p>
+        <a href="{{ url_for('pda.validator_page') }}" class="btn btn-brand-primary btn-lg px-4">
+            Mulai Validasi <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+</section>
+
+{% endblock %}

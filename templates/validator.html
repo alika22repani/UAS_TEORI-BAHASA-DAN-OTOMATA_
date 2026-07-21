@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Validator{% endblock %}
+
+{% block content %}
+
+<section class="section-tight" style="background: var(--ink); color:#EDEEF4;">
+    <div class="container">
+        <div class="mb-2" style="color: var(--amber); font-family: var(--font-mono); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase;">Modul Inti</div>
+        <h1 style="color:#fff;">PDA HTML Tag Validator</h1>
+        <p class="lead mb-0" style="color:#B9BECF; max-width:60ch;">
+            Tempelkan kode HTML, lalu jalankan mesin Pushdown Automata untuk memeriksa
+            keseimbangan struktur tag secara langkah demi langkah.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <!-- ===================== EDITOR + HASIL ===================== -->
+        <form id="validatorForm">
+            <div class="validator-shell mb-3">
+                <div class="validator-toolbar">
+                    <div class="dot-group">
+                        <span style="background:#E5645A;"></span>
+                        <span style="background:#E8C15E;"></span>
+                        <span style="background:#59C29B;"></span>
+                        <span class="mono ms-2 small text-white-50">input.html</span>
+                    </div>
+                    <button id="submitBtn" type="submit" class="btn btn-brand-primary btn-sm px-3">
+                        <i class="bi bi-play-fill me-1"></i>Jalankan Validasi
+                    </button>
+                </div>
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                        <textarea id="htmlInput" placeholder="&lt;div&gt;&#10;  &lt;p&gt;Tulis atau tempel kode HTML Anda di sini&lt;/p&gt;&#10;&lt;/div&gt;"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="result-panel">
+                            <div id="emptyState" class="text-center text-secondary py-5">
+                                <i class="bi bi-cursor-text fs-2 d-block mb-2"></i>
+                                Hasil validasi akan muncul di sini setelah Anda menjalankan proses.
+                            </div>
+                            <div id="summaryArea" class="d-none">
+                                <div id="statusArea"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- ===================== TABEL JEJAK SIMULASI ===================== -->
+        <div id="traceWrapper" class="validator-shell d-none mb-5">
+            <div class="validator-toolbar">
+                <span class="mono small">Jejak Simulasi PDA (Stack &amp; State)</span>
+                <span class="mono small text-white-50">step-by-step trace</span>
+            </div>
+            <div class="table-responsive p-2">
+                <table class="table trace-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Token</th>
+                            <th>Aksi</th>
+                            <th>State</th>
+                            <th>Posisi</th>
+                            <th>Stack Setelah Aksi</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="traceBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===================== CONTOH HTML ===================== -->
+        <div class="row mb-3">
+            <div class="col-lg-8">
+                <h4 class="mb-1">Contoh HTML</h4>
+                <p class="text-secondary">Klik salah satu contoh untuk memuatnya langsung ke editor.</p>
+            </div>
+        </div>
+        <div class="row g-3 mb-5">
+            {% for ex in examples %}
+            <div class="col-md-6 col-lg-4">
+                <div class="example-chip h-100" data-code="{{ ex.code | e }}">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <strong>{{ ex.title }}</strong>
+                        {% if ex.category == 'valid' %}
+                            <span class="tag-valid small"><i class="bi bi-check-circle-fill"></i> Valid</span>
+                        {% else %}
+                            <span class="tag-invalid small"><i class="bi bi-x-circle-fill"></i> Tidak Valid</span>
+                        {% endif %}
+                    </div>
+                    <p class="text-secondary small mb-0">{{ ex.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- ===================== RINGKASAN KONSEP ===================== -->
+        <div class="card-feature">
+            <div class="row gy-3">
+                <div class="col-lg-8">
+                    <h5 class="mb-2">Ingin tahu detail teorinya?</h5>
+                    <p class="text-secondary mb-0">
+                        Baca definisi formal 7-tuple PDA, aturan transisi, dan batasan aplikasi
+                        secara lengkap di halaman Documentation.
+                    </p>
+                </div>
+                <div class="col-lg-4 d-flex align-items-center justify-content-lg-end">
+                    <a href="{{ url_for('main.documentation') }}" class="btn btn-brand-outline">Buka Documentation</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/validator.js') }}"></script>
+{% endblock %}
